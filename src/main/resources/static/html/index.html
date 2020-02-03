@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" style="" ng-app="indexApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/public.css">
+    <link rel="stylesheet" href="../css/dropdown.css">
+    <link rel="stylesheet" href="../css/researchersWarning.css">
+    <link rel="stylesheet" href="../css/superWarning1.css">
+    <link rel="stylesheet" href="../css/data_show.css">
+	<link rel="stylesheet" href="../css/my_css.css">
+    <link rel="stylesheet" href="../css/detail_modal.css">
+    <link rel="stylesheet" href="../lib/jquery-easyui/themes/bootstrap/easyui.css"/>
+    <link rel="stylesheet" href="../lib/jquery-easyui/themes/icon.css"/>
+    <link rel="stylesheet" href="../lib/bootstrap-3.3.7/css/bootstrap.css"/>
+    <title>重点区域预警</title>
+</head>
+<style>
+    body{
+        overflow-x: hidden;
+    }
+</style>
+<body class="pu_bg" ng-controller="indexCtrl" ng-init="init()">
+    <!-- 头部开始 -->
+    <div class="header">
+        <div class="h-logo">
+            <div class="circle"></div>
+            <div class="wrapper"><img src="../images/logo-guohui.png" alt=""><img src="../images/quan.png" alt=""></div>
+            <a href="JavaScript:;" class="logo_tips">
+                <img src="../images/ly_index-logotxt.png" alt="">
+            </a>
+        </div>
+        <div class="h-personal">
+            <div class="detail hmoe_detail">
+                <!--
+                <a href="#" class="home_icon home_user">
+                    <img src="../images/cjyj-qhyh.png" alt="" class="img">
+                </a>
+                -->
+                <a href="#">
+                    <img src="../images/yj-photo-1.png" alt="" class="photo" style="margin-right: 0.1rem;margin-bottom: 0.05rem">
+                </a>
+                <ul class="home_head_list">
+                    <li>
+                        <span class="tt">姓名：</span>
+                        <span class="tt">{{username}}</span>
+                    </li>
+                    <li>
+                        <span class="tt">单位：</span>
+                        <a class="tt">{{unitname}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="h-title">
+            <div class="bar left"></div>
+            <div class="bar right"></div>
+            <div class="middle">
+                <span class="title">重点区域预警</span>
+                <span class="title-english">Key Area Warning</span>
+            </div>
+        </div>
+    </div>
+    <!-- 头部结束 -->
+
+    <!-- main -->
+    <div class="main clearfix">
+
+        <!-- 左侧内容开始 -->
+        <div class="m-leftN">
+            <!--
+            <div class="leftlight"></div>
+            <div class="rightlight"></div>
+            -->
+            <div class="leftN-bg1" style="width: 3.3rem;height: 9.3rem">
+                <p class="title">统计展示</p>
+                <!-- 时间条件选择 -->
+                <ul class="date" style="padding-left: 0.62rem">
+                    <li ng-click="intervalChange('today')" ng-class="{'cur':countQueryModel.interval == 'today'}">本日</li>
+                    <li ng-click="intervalChange('curWeek')" ng-class="{'cur':countQueryModel.interval == 'curWeek'}">本周</li>
+                    <li ng-click="intervalChange('curMonth')" ng-class="{'cur':countQueryModel.interval == 'curMonth'}">本月</li>
+                </ul>
+
+                <!-- 摄像头抓拍路人数 （如果取摄像头名称则取13个长度）-->
+                <div id="myDiv" style="height: 1.5rem;">
+                    <!--
+                    <span style="display: block;height:0.6rem;color:white;font-size: 0.25rem;padding-top: 0.2rem;text-align: center" ng-bind="cameraName | cutstring:15:'..'"></span>
+                    -->
+                    <span style="display: block;height:0.6rem;color:white;font-size: 0.2rem;padding-top: 0.3rem;text-align: center">抓拍路人数</span>
+                        <span style="display:block;text-align:center;margin-top:-0.05rem;color:#61f9ff;font-size: 0.5rem;font-family:'digital';" ng-bind="shot || 0"></span>
+
+                </div>
+
+                <!-- 各底库报警数量展示
+                <div class="leftN-bg2 jqyj clearfix" style="margin-top: 0.15rem">
+                    <p class="title" style="margin-bottom: 0.1rem"><a href="javascript:void(0);" style="color: white;">各底库报警数</a></p>
+                    <div ng-class="{'myDiv-left':$index%2 == 1,'myDiv-right':$index%2 == 0}" ng-repeat="warningNum in warningNums track by $index">
+                        <span class="mySpan-top" title="{{warningNum.name}}" ng-bind="warningNum.name | cutstring:6:'..'"></span>
+                        <span class="mySpan-bottom" ng-bind="warningNum.count || 0"></span>
+                    </div>
+                </div>
+                -->
+
+                <div class="leftN-bg2 jqyj clearfix" style="margin-top: 0.15rem">
+                    <p class="title" style="margin-bottom: 0.1rem"><a href="javascript:void(0);" style="color: white;">各底库报警数</a></p>
+                    <ul class="info">
+                        <li style="cursor: pointer;margin-left: -0.06rem;height: 0.6rem" ng-repeat="warningNum in warningNums track by $index" ng-click="">
+                            <p>
+                                <span class="warningNum-left" style="margin-top:0.12rem;color:white;width:.5rem;text-align:center;display:inline-block;background: url(../images/sf_table_index_03.png) no-repeat center" ng-bind="warningNum.name |cutstring :2:''"></span>
+                                <span class="warningNum-middle" style="margin-top:0.12rem;font-size:0.15rem;width:1.27rem;margin-left:-.05rem;text-align:center;display:inline-block;" title="{{warningNum.name}}" ng-bind="warningNum.name |cutstring :7:'...'"></span>
+                                <span ng-class="{'orange':warningNum.alertLevelCode == 'RED','yellow':warningNum.alertLevelCode == 'YELLOW','blue':warningNum.alertLevelCode == 'BLUE' || !warningNum.alertLevelCode}" style="margin-top:0.12rem;text-align:center;margin-right:0.15rem;width:1.2rem;margin-left:0.05rem;float:right;font-family:'digital';font-size: .4rem" ng-bind="warningNum.count"></span>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 事件预警列表
+                <div class="leftN-bg2 sjyj" style="margin-top: 0.15rem">
+                    <p class="title" style="margin-top: 0.1rem"><a href="javascript:void(0);" style="color: white">事件预警</a></p>
+                    <ul class="info">
+                        <li style="cursor: pointer;margin-left: -0.06rem"ng-repeat="event in eventList track by $index" ng-click="">
+                            <p>
+                                <span ng-if="event.type == '聚集'" style="color:#d95050;width:.5rem;text-align:center;display:inline-block;" ng-bind="event.type"></span>
+                                <span ng-if="event.type != '聚集'" style="color: #b69e65;width:.5rem;text-align:center;display:inline-block;" ng-bind="event.type"></span>
+                                <span style="width:1.58rem;margin-left:-.05rem;text-align:center;display:inline-block;" title="{{event.address}}" ng-bind="event.address |cutstring :11:'...'"></span>
+                                <span ng-bind="event.time * 1000 | date:'MM-dd HH:mm'"></span>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+                -->
+            </div>
+        </div>
+        <!-- 左侧内容结束-->
+
+        <!-- 中间内容开始 -->
+        <div class="m-content centerN">
+        	<!-- 条件搜索框 -->
+            <div class="sw_searchTop">
+                <ul>
+                    <li title="点击切换搜索状态"><img src="../images/cjyjN-search-more.png" alt="" class="more"></li>
+                    <!-- 可能加自定义时间选择
+                    <li>
+                        <div class="dropdown" style="display: block">
+                            <select class="dropdown-toggle borderRadius" ng-model="countQueryModel.interval">
+                                <option value="{{key}}" ng-repeat="(key, value) in datetypeOption" class="drop-item">{{value}}</option>
+                            </select>
+                        </div>
+                    </li>
+-->
+                    <li style="margin-right: 0.1rem">
+                        <div class="dropdown" style="display: block">
+                            <select id="mySelect" class="dropdown-toggle borderRadius" ng-model="countQueryModel.cameraId" ng-change="cameraChange()">
+                                <option ng-repeat="camera in cameraList track by $index" class="drop-item" value="{{camera.id}}">{{camera.name}}</option>
+	                        </select>
+                        </div>
+                    </li>
+                    <li class="search borderRadius">
+                        <i class="glyphicon glyphicon-hand-right"></i>
+                        <span style="font-size: 0.18rem" ng-click="go()">跳转</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- ifram框展示 width: 12.4rem-->
+            <div class="content">
+                <div>
+                    <img id="myIframe" src="/getCode" style=" "></iframe>
+                </div>
+            </div>
+        </div>
+        <!-- 中间内容结束-->
+
+        <!-- 右侧内容开始 -->
+        <div class="m-rightN">
+            <!--
+            <img src="../images/yj-focus-icon.png" class="focus-icon" alt="">
+            -->
+
+            <!-- 预警列表 -->
+            <div class="bg bg1">
+                <p class="title"><a href="javascript:void(0);" title=""  style="color:white">人员预警</a></p>
+                <ul style="height: 3.1rem">
+                    <li ng-repeat="warning in warningList track by $index"  repeat-finish="repeatFinish()"
+                         style="position: unset">
+                        <div style="width:.5rem; height:.6rem;float: left;">
+                            <img style="width:.45rem; height:.55rem;cursor:pointer" title="点击查看详情" ng-src="{{warning.hitFaceImageUri}}" alt="" ng-click="toDetailModal($index,1)">
+                        </div>
+                        <span ng-if="warning.alertLevelCode == 'NORMAL' " style="width:.5rem;margin-left:2px;margin-top:18px;text-align:left;display:inline-block;" title="{{warning.hitName}}">{{warning.hitName | cutstring:3:'..'}}</span>
+                        <span ng-if="warning.alertLevelCode != 'NORMAL' " title = "点击跳转人员电子档案" ng-click="goElecFile(warning)" style="cursor:pointer;width:.5rem;margin-left:2px;margin-top:18px;text-align:left;display:inline-block;" title="{{warning.hitName}}">{{warning.hitName | cutstring:3:'..'}}</span>
+                        <span style="width:.5rem;margin-left:1px;margin-top:18px;text-align:left;display:inline-block;">{{warning.hitSimilarity | similar}}</span>
+                        <span style="width:.5rem;margin-left:-8px;margin-top:18px;text-align:left;display:inline-block;" title="{{warning.hitRepoName}}">{{warning.hitRepoName | cutstring:2:'..'}}</span>
+                        <span style="width:.6rem;margin-top:18px;margin-right:0px;text-align:left;display:inline-block;float: none;">{{warning.timestamp * 1000 | date : 'HH:mm:ss'}}</span>
+                        <img title="点击查看视频" ng-click="changeCamera(warning.cameraId)" style="cursor:pointer;height:.5rem;width:.5rem;float:right;margin-right:0rem;margin-top:.05rem;" ng-if="warning.alertLevelCode == 'RED' " src="../images/cjyjN-person-orange.png" alt="">
+                        <img title="点击查看视频" ng-click="changeCamera(warning.cameraId)" style="cursor:pointer;height:.5rem;width:.5rem;float:right;margin-right:0rem;margin-top:.05rem;" ng-if="warning.alertLevelCode == 'YELLOW' " src="../images/cjyjN-person-yellow.png" alt="">
+                        <img title="点击查看视频" ng-click="changeCamera(warning.cameraId)" style="cursor:pointer;height:.5rem;width:.5rem;float:right;margin-right:0rem;margin-top:.05rem;" ng-if="warning.alertLevelCode == 'BLUE' " src="../images/cjyjN-person-blue.png" alt="">
+                        <i title="点击查看视频" ng-if="warning.alertLevelCode == 'NORMAL' " ng-click="changeCamera(warning.cameraId)" style="cursor:pointer;float: right;margin-right: 0.18rem;margin-top:0.2rem" class="glyphicon glyphicon-facetime-video"></i>
+                    </li>
+                </ul>
+            </div>
+            <div class="bg bg3">
+                <p class="title"><a href="javascript:void(0);" title=""  style="color:white">路人栏</a></p>
+                <ul>
+                    <li ng-repeat="normalWarning in normalWarningList track by $index" repeat-finish="repeatFinish()"
+                        style="position: unset">
+                        <div style="width:.5rem; height:.6rem;float: left;">
+                            <img style="width:.45rem; height:.55rem;cursor:pointer" title="点击查看详情" ng-src="{{normalWarning.hitFaceImageUri}}" alt="" ng-click="toDetailModal($index,2)">
+                        </div>
+                        <span style="width:.5rem;margin-left:2px;margin-top:18px;text-align:left;display:inline-block;" title="{{normalWarning.hitName}}">{{normalWarning.hitName | cutstring:3:'..'}}</span>
+                        <span style="width:.5rem;margin-left:1px;margin-top:18px;text-align:left;display:inline-block;">{{normalWarning.hitSimilarity | similar}}</span>
+                        <span style="width:.5rem;margin-left:-8px;margin-top:18px;text-align:left;display:inline-block;" title="{{normalWarning.hitRepoName}}">{{normalWarning.hitRepoName | cutstring:2:'..'}}</span>
+                        <span style="width:.6rem;margin-top:18px;margin-right:0px;text-align:left;display:inline-block;float: none;">{{normalWarning.timestamp * 1000 | date : 'HH:mm:ss'}}</span>
+                        <img title="点击查看视频" ng-click="changeCamera(normalWarning.cameraId)" style="cursor:pointer;height:.5rem;width:.5rem;float:right;margin-right:0rem;margin-top:.05rem;" ng-if="normalWarning.alertLevelCode == 'RED' " src="../images/cjyjN-person-orange.png" alt="">
+                        <img title="点击查看视频" ng-click="changeCamera(normalWarning.cameraId)" style="cursor:pointer;height:.5rem;width:.5rem;float:right;margin-right:0rem;margin-top:.05rem;" ng-if="normalWarning.alertLevelCode == 'YELLOW' " src="../images/cjyjN-person-yellow.png" alt="">
+                        <img title="点击查看视频" ng-click="changeCamera(normalWarning.cameraId)" style="cursor:pointer;height:.5rem;width:.5rem;float:right;margin-right:0rem;margin-top:.05rem;" ng-if="normalWarning.alertLevelCode == 'BLUE' " src="../images/cjyjN-person-blue.png" alt="">
+                        <i title="点击查看视频" ng-if="normalWarning.alertLevelCode == 'NORMAL' " ng-click="changeCamera(normalWarning.cameraId)" style="cursor:pointer;float: right;margin-right: 0.18rem;margin-top:0.2rem" class="glyphicon glyphicon-facetime-video"></i>
+                    </li>
+                </ul>
+            </div>
+            <div class="bg bg2">
+                <p class="title"><a href="javascript:void(0);" title=""  style="color:white">事件预警</a></p>
+                <ul>
+                    <li style="position: unset" ng-repeat="event in eventList track by $index">
+                        <p>
+                            <span ng-if="event.type == '聚集'" style="color:#d95050;width:.5rem;text-align:center;display:inline-block;margin-top: .2rem" ng-bind="event.type"></span>
+                            <span ng-if="event.type != '聚集'" style="color: #b69e65;width:.5rem;text-align:center;display:inline-block;margin-top: .2rem" ng-bind="event.type"></span>
+                            <span title="点击查看详情" style="cursor:pointer;width:1.28rem;margin-left:.05rem;text-align:left;display:inline-block;margin-top: .2rem" title="{{event.address}}" ng-bind="event.address |cutstring :9:'...'"></span>
+                            <span style="width:0.95rem;text-align:left;display:inline-block;margin-top: .2rem" ng-bind="event.time * 1000 | date:'MM-dd HH:mm'"></span>
+                            <i title="点击查看视频" ng-click="changeCamera(event.cameraId)" style="cursor:pointer;float: right;margin-right: 0.18rem;margin-top:0.2rem" class="glyphicon glyphicon-facetime-video"></i>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- end main -->
+
+    <!-- 底部 -->
+    <div class="footer">
+        <p class="tt">版权所有：泸州市公安局 技术支持：上海依图科技有限公司</p>
+    </div>
+    <!-- 底部结束 -->
+    
+    <!-- 正在加载中提示 -->
+	<div id="loading-info" style="left: 48%; top: 50%; width: 32px; height: 32px; position: fixed; z-index: 100000; display: none;">
+		<img alt="" src="../images/4.gif" style="width: 32px; height: 32px;">
+	</div>
+	<!-- /正在加载中提示 -->
+    </div>
+</body>
+
+<!-- 加载js -->
+<script src="../lib/jquery.min.js"></script>
+<script src="../lib/countUp.js"></script>
+<script src="../js/setFont.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/superWarning.js"></script>
+<script src="../js/base.js"></script>
+
+<!-- angularjs 插件集合 start -->
+<script src="../lib/angular-1.5.8/angular.min.js"></script>
+<script src="../lib/angular-1.5.8/angular-sanitize.min.js"></script>
+<script src="../lib/angular-1.5.8/angular-animate.min.js"></script>
+<script src="../lib/angular-1.5.8/angular-resource.min.js"></script>
+<script src="../lib/angular-strap-2.3.10/angular-strap.min.js"></script>
+<script src="../lib/angular-strap-2.3.10/angular-strap.tpl.min.js"></script>
+<script src="../lib/angular-ui-router/angular-ui-router.min.js"></script>
+<script src="../lib/angular-oclazyload/ocLazyLoad.min.js"></script>
+<script src="../lib/angular-confirm/js/angular-confirm.min.js"></script>
+<!-- angularjs 插件集合 end -->
+
+<!-- Easy UI相关 -->
+<script src="../lib/jquery-easyui/jquery.easyui.min.js"></script>
+<script src="../lib/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+
+<!-- 控制层js -->
+<script src="../js/warning/indexCtrl.js"></script>
+<!-- date处理工具类 -->
+<script src="../js/warning/utils/dateUtil.js"></script>
+</html>

@@ -1,0 +1,122 @@
+
+.modal-left-div-orange{
+    border-radius: 6px;
+    border:solid 4px orange;
+    height:4rem;
+    width:3.82rem;
+    float: left;
+}
+
+.modal-middle-div-orange{
+    border-radius: 6px;
+    border:solid 4px orange;
+    height:4rem;
+    width:3.82rem;
+    float: left;
+    margin-left: 0.5rem;
+}
+
+.modal-right-div-orange{
+    border-radius: 6px;
+    border:solid 4px orange;
+    height:4rem;
+    width:7.5rem;
+    float: right;
+}
+
+.modal-left-div-yellow{
+    border-radius: 6px;
+    border:solid 4px yellow;
+    height:4rem;
+    width:3.82rem;
+    float: left;
+}
+
+.modal-middle-div-yellow{
+    border-radius: 6px;
+    border:solid 4px yellow;
+    height:4rem;
+    width:3.82rem;
+    float: left;
+    margin-left: 0.5rem;
+}
+
+.modal-right-div-yellow{
+    border-radius: 6px;
+    border:solid 4px yellow;
+    height:4rem;
+    width:7.5rem;
+    float: right;
+}
+
+.modal-left-div-blue{
+    border-radius: 6px;
+    border:solid 4px deepskyblue;
+    height:4rem;
+    width:3.82rem;
+    float: left;
+}
+
+.modal-middle-div-blue{
+    border-radius: 6px;
+    border:solid 4px deepskyblue;
+    height:4rem;
+    width:3.82rem;
+    float: left;
+    margin-left: 0.5rem;
+}
+
+.modal-right-div-blue{
+    border-radius: 6px;
+    border:solid 4px deepskyblue;
+    height:4rem;
+    width:7.5rem;
+    float: right;
+}
+
+.modal-left-div-normal{
+    border-radius: 6px;
+    border:solid 4px;
+    height:4rem;
+    width:3.82rem;
+    float: left;
+}
+
+.modal-middle-div-normal{
+    border-radius: 6px;
+    border:solid 4px;
+    height:4rem;
+    width:3.82rem;
+    float: left;
+    margin-left: 0.5rem;
+}
+
+.modal-right-div-normal{
+    border-radius: 6px;
+    border:solid 4px;
+    height:4rem;
+    width:7.5rem;
+    float: right;
+}
+
+.modal_show_left{
+    height:0.5rem;
+    width:3.82rem;
+    float: left;
+    margin-top: 0.05rem
+}
+.modal_show_middle{
+    height:0.5rem;
+    width:3.82rem;
+    float: left;
+    margin-top: 0.05rem;
+    margin-left: 0.5rem;
+}
+
+.modal_show_right{
+    height:0.5rem;
+    width:4.2rem;
+    float: right;
+    margin-top: 0.05rem;
+    margin-left: 0.5rem;
+}

@@ -1,0 +1,42 @@
+{
+    "车辆卡口":   
+    {
+        "ICON":"car",
+        "DATA": [
+        {
+            "USERPOSITION": "105.448288,28.876897",
+            "USERHEAD": ""
+        },
+        {
+            "USERPOSITION": "105.410148,28.894303",
+            "USERHEAD": ""
+        }]
+    },
+    "网吧":
+    {
+        "ICON":"netbar",
+        "DATA": [
+        {
+            "USERPOSITION": "105.420403,28.877566",
+            "USERHEAD": ""
+        },
+        {
+            "USERPOSITION": "105.44083,28.880469",
+            "USERHEAD": ""
+        }]
+    },
+    "旅店":
+    {
+        "ICON":"hotel",
+        "DATA": [
+        {
+            "USERPOSITION": "105.455366,28.898776",
+            "USERHEAD": ""
+        },
+        {
+            "USERPOSITION": "105.45849,28.891683",
+            "USERHEAD": ""
+        }]
+    }
+
+}
